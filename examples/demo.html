@@ -144,33 +144,39 @@
         const verificationOverlay = document.querySelector('#verification-overlay');
         const verifyButton = document.querySelector('#verify-button');
 
-        function verifyIdentity() {
-            let params = {
-                successCallback: () => {
-                    // Show success overlay
-                    const successOverlay = document.getElementById('success-overlay');
-                    successOverlay.classList.remove('opacity-0', 'pointer-events-none');
-                    
-                    // Hide verification overlay
-                    verificationOverlay.style.display = 'none';
-                    
-                    // Fade out success overlay after 4 seconds
+        async function verifyIdentity() {
+            const params = {
+                localTesting: window.location.origin.includes('localhost')
+            };
+            
+            try {
+                await livenessChecker.checkLiveness(params);
+
+                // Show success overlay
+                const successOverlay = document.getElementById('success-overlay');
+                successOverlay.classList.remove('opacity-0', 'pointer-events-none');
+                
+                // Hide verification overlay
+                verificationOverlay.style.display = 'none';
+                
+                // Fade out success overlay after 4 seconds
+                setTimeout(() => {
+                    successOverlay.classList.add('opacity-0');
                     setTimeout(() => {
-                        successOverlay.classList.add('opacity-0');
-                        setTimeout(() => {
-                            successOverlay.classList.add('pointer-events-none');
-                        }, 1000);
-                    }, 4000);
-                }, 
-                errorCallback: (error) => {
+                        successOverlay.classList.add('pointer-events-none');
+                    }, 1000);
+                }, 4000);
+            } catch(error) {
+                if(error === 'CANCELLED') {
+                    verificationOverlay.querySelector('p').textContent = `Verification tab was closed prior to finishing. Please try again.`;
+                } else if(error === 'POPUP_BLOCKED') {
+                    verificationOverlay.querySelector('p').textContent = `Popup was blocked by the browser. Please try again.`;
+                } else if(error === 'WEBCAM_ERROR') {
+                    verificationOverlay.querySelector('p').textContent = `Unable to access webcam. Please ensure you have granted permission and your webcam is working properly.`;
+                } else {
                     verificationOverlay.querySelector('p').textContent = `An error occurred during verification. Please try again.`;
                 }
-            };
-
-            if(window.location.origin.includes('localhost')) {
-                params.localTesting = true;
             }
-            livenessChecker.checkLiveness(params);
         }
 
         verifyButton.addEventListener('click', verifyIdentity);

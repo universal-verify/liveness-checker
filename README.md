@@ -21,29 +21,40 @@ npm install liveness-checker
 ```javascript
 import livenessChecker from 'liveness-checker';
 
-// Basic usage
-livenessChecker.checkLiveness({
-    successCallback: () => {
+// Basic usage with async/await
+try {
+    await livenessChecker.checkLiveness();
+    console.log('Liveness check passed');
+} catch (error) {
+    console.error('Liveness check failed:', error);
+}
+
+// Or with .then/.catch
+livenessChecker.checkLiveness()
+    .then(() => {
         console.log('Liveness check passed');
-    },
-    errorCallback: (error) => {
+    })
+    .catch((error) => {
         console.error('Liveness check failed:', error);
-    }
-});
+    });
 ```
 
 ### API Reference
 
-#### `checkLiveness(params)`
+#### `checkLiveness()`
 
-Opens the liveness checker in a new tab and uses the callback functions provided upon success or error
+Opens the liveness checker in a new tab and returns a Promise that resolves on success or rejects on error (or if the tab is closed or popup is blocked).
 
-##### Parameters
+##### Returns
 
-- `params` (Object): Configuration object
-  - `successCallback` (Function): Called when the liveness check is successful
-  - `errorCallback` (Function): Called when the liveness check fails
-    - Receives the error message as a string
+- `Promise<void>`: Resolves if the liveness check is successful, rejects with an error code if it fails, the tab is closed, or the popup is blocked.
+
+##### Possible Rejection Error Codes
+
+- `CANCELLED`: The user closed the liveness check tab before completing the process.
+- `POPUP_BLOCKED`: The browser blocked the popup window from opening.
+- `WEBCAM_ERROR`: There was an issue accessing the user's webcam (e.g., permission denied or device not found).
+- `INTERNAL_ERROR`: An unexpected error occurred during the liveness check process.
 
 ## Privacy
 
