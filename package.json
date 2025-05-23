@@ -1,0 +1,36 @@
+{
+  "name": "liveness-checker",
+  "version": "0.0.1",
+  "description": "Easy to use tool to check user liveness via webcam",
+  "author": "kalegd",
+  "license": "MPL-2.0",
+  "main": "build/liveness-checker.js",
+  "type": "module",
+  "keywords": [
+    "age",
+    "verification"
+  ],
+  "homepage": "https://github.com/universal-verify/liveness-checker#readme",
+  "bugs": {
+    "url": "https://github.com/universal-verify/liveness-checker/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/universal-verify/liveness-checker.git"
+  },
+  "scripts": {
+    "start": "http-server -c-1 -p 8001",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "rollup -c --bundleConfigAsCjs",
+    "build:css": "tailwindcss -i ./styles/input.css -o ./styles/main.css --minify",
+    "watch:css": "tailwindcss -i ./styles/input.css -o ./styles/main.css --watch"
+  },
+  "dependencies": {
+    "@rollup/plugin-terser": "^0.4.4",
+    "http-server": "^14.1.1",
+    "rollup": "^4.41.0"
+  },
+  "devDependencies": {
+    "tailwindcss": "^3.4.0"
+  }
+}

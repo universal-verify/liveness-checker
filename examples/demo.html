@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Art Gallery Demo</title>
+    <link rel="stylesheet" href="../styles/main.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous">
+    <link rel="apple-touch-icon" sizes="180x180" href="/favicons/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicons/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicons/favicon-16x16.png">
+</head>
+<body class="bg-gray-900 text-white">
+    <!-- Navigation -->
+    <nav class="bg-black shadow-lg">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center">
+                    <a href="https://github.com/universal-verify/liveness-checker" class="text-2xl font-bold text-blue-600">Art Gallery</a>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <button class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition-colors">
+                        Premium
+                    </button>
+                    <button class="text-gray-300 hover:text-white transition-colors">
+                        <i class="fas fa-user"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Glass Overlay -->
+    <div id="verification-overlay" class="fixed inset-0 bg-black/50 backdrop-blur-md z-50 flex items-center justify-center">
+        <div class="bg-white/10 backdrop-blur-xl rounded-xl p-8 max-w-md w-full mx-4 border border-white/20 shadow-2xl">
+            <div class="text-center">
+                <i class="fas fa-shield-alt text-4xl text-blue-500 mb-4"></i>
+                <h2 class="text-2xl font-bold text-white mb-4">Verification Required</h2>
+                <p class="text-gray-300 mb-6">Please verify that you are physically present to access art gallery.</p>
+                <button id="verify-button" class="bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition-colors w-full">
+                    Verify Identity
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Success Overlay -->
+    <div id="success-overlay" class="opacity-0 pointer-events-none fixed inset-0 z-50 flex items-center justify-center">
+        <div class="bg-black/50 backdrop-blur-xl rounded-xl p-8 max-w-md w-full mx-4 border border-white/20 shadow-2xl">
+            <div class="text-center">
+                <i class="fas fa-check-circle text-4xl text-green-500 mb-4"></i>
+                <h2 class="text-2xl font-bold text-white mb-4">Verification Complete</h2>
+                <p class="text-gray-300">You can now access the art gallery.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- hidden Content -->
+    <main class="max-w-7xl mx-auto px-4 py-8">
+        <!-- Hero Section -->
+        <div class="mb-8">
+            <h1 class="text-4xl font-bold mb-4">Art Gallery</h1>
+            <p class="text-gray-400">Discover exclusive artwork from renowned artists</p>
+        </div>
+
+        <!-- Grid of Art Images -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <!-- Art Image 1 -->
+            <div class="bg-gray-800 rounded-lg overflow-hidden shadow-lg">
+                <div class="aspect-w-16 aspect-h-9">
+                    <img src="../images/art1.jpg" alt="Art Content" class="w-full h-full object-cover">
+                </div>
+                <div class="p-4">
+                    <h3 class="font-semibold mb-2">The Watchful Guardian</h3>
+                    <p class="text-gray-400 text-sm">A striking monochrome portrait capturing the intensity and wisdom of a modern-day sentinel.</p>
+                </div>
+            </div>
+
+            <!-- Art Image 2 -->
+            <div class="bg-gray-800 rounded-lg overflow-hidden shadow-lg">
+                <div class="aspect-w-16 aspect-h-9">
+                    <img src="../images/art2.jpg" alt="Art Content" class="w-full h-full object-cover">
+                </div>
+                <div class="p-4">
+                    <h3 class="font-semibold mb-2">Mechanical Pooh</h3>
+                    <p class="text-gray-400 text-sm">A whimsical fusion of childhood nostalgia and steampunk engineering, revealing the gears beneath the bear.</p>
+                </div>
+            </div>
+
+            <!-- Art Image 3 -->
+            <div class="bg-gray-800 rounded-lg overflow-hidden shadow-lg">
+                <div class="aspect-w-16 aspect-h-9">
+                    <img src="../images/art3.jpg" alt="Art Content" class="w-full h-full object-cover">
+                </div>
+                <div class="p-4">
+                    <h3 class="font-semibold mb-2">Neon Kicks</h3>
+                    <p class="text-gray-400 text-sm">Futuristic sneakers glowing with vibrant neon lights, blending street style with cyberpunk aesthetics.</p>
+                </div>
+            </div>
+
+            <!-- Art Image 4 -->
+            <div class="bg-gray-800 rounded-lg overflow-hidden shadow-lg">
+                <div class="aspect-w-16 aspect-h-9">
+                    <img src="../images/art4.jpg" alt="Art Content" class="w-full h-full object-cover">
+                </div>
+                <div class="p-4">
+                    <h3 class="font-semibold mb-2">Cyber Fox</h3>
+                    <p class="text-gray-400 text-sm">A mesmerizing fox rendered in electric neon hues, embodying the spirit of the digital wild.</p>
+                </div>
+            </div>
+
+            <!-- Art Image 5 -->
+            <div class="bg-gray-800 rounded-lg overflow-hidden shadow-lg">
+                <div class="aspect-w-16 aspect-h-9">
+                    <img src="../images/art5.jpg" alt="Art Content" class="w-full h-full object-cover">
+                </div>
+                <div class="p-4">
+                    <h3 class="font-semibold mb-2">Neon Ronin</h3>
+                    <p class="text-gray-400 text-sm">A cybernetic warrior clad in glowing armor, merging ancient tradition with futuristic technology.</p>
+                </div>
+            </div>
+
+            <!-- Art Image 6 -->
+            <div class="bg-gray-800 rounded-lg overflow-hidden shadow-lg">
+                <div class="aspect-w-16 aspect-h-9">
+                    <img src="../images/art6.jpg" alt="Art Content" class="w-full h-full object-cover">
+                </div>
+                <div class="p-4">
+                    <h3 class="font-semibold mb-2">Eternal Embrace</h3>
+                    <p class="text-gray-400 text-sm">A romantic, tattooed couple depicted in a timeless, East Asian-inspired composition, celebrating love and beauty.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Verification Notice -->
+        <div class="mt-12 mb-8 text-center text-gray-400">
+            <p>This is a demo website for liveness verification purposes. All content is art-related.</p>
+        </div>
+    </main>
+
+    <script type="module">
+        import livenessChecker from '../scripts/liveness-checker.js';
+
+        const verificationOverlay = document.querySelector('#verification-overlay');
+        const verifyButton = document.querySelector('#verify-button');
+
+        function verifyIdentity() {
+            let params = {
+                successCallback: () => {
+                    // Show success overlay
+                    const successOverlay = document.getElementById('success-overlay');
+                    successOverlay.classList.remove('opacity-0', 'pointer-events-none');
+                    
+                    // Hide verification overlay
+                    verificationOverlay.style.display = 'none';
+                    
+                    // Fade out success overlay after 4 seconds
+                    setTimeout(() => {
+                        successOverlay.classList.add('opacity-0');
+                        setTimeout(() => {
+                            successOverlay.classList.add('pointer-events-none');
+                        }, 1000);
+                    }, 4000);
+                }, 
+                errorCallback: (error) => {
+                    verificationOverlay.querySelector('p').textContent = `An error occurred during verification. Please try again.`;
+                }
+            };
+
+            if(window.location.origin.includes('localhost')) {
+                params.localTesting = true;
+            }
+            livenessChecker.checkLiveness(params);
+        }
+
+        verifyButton.addEventListener('click', verifyIdentity);
+    </script>
+</body>
+</html> 
