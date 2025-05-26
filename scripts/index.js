@@ -126,17 +126,21 @@ class Main {
                     //check if the face is looking to the left or right
                     let leftEye = detection.landmarks.getLeftEye()[0].x;
                     let rightEye = detection.landmarks.getRightEye()[0].x;
-                    let nose = detection.landmarks.getNose()[0].x;
-                    if(direction == 'to your left' && nose < leftEye) {//looking left
+                    let eyeDistance = Math.abs(rightEye - leftEye);
+                    let nose = detection.landmarks.getNose()[4].x;
+                    let lookingLeft = nose < leftEye || Math.abs(leftEye - nose) < eyeDistance * 0.25;
+                    let lookingRight = nose > rightEye || Math.abs(rightEye - nose) < eyeDistance * 0.25;
+                    let lookingStraight = Math.abs(nose - (leftEye + rightEye) / 2) < eyeDistance * 0.125;
+                    if(direction == 'to your left' && lookingLeft) {//looking left
                         direction = 'to your right';
-                    } else if(direction == 'to your left' && nose > rightEye) {//looking left flipped
+                    } else if(direction == 'to your left' && lookingRight) {//looking left flipped
                         direction = 'to your right';
                         flipped = true;
-                    } else if(direction == 'to your right' && !flipped && nose > rightEye) {//looking right
+                    } else if(direction == 'to your right' && !flipped && lookingRight) {//looking right
                         direction = 'straight';
-                    } else if(direction == 'to your right' && flipped && nose < leftEye) {//looking right flipped
+                    } else if(direction == 'to your right' && flipped && lookingLeft) {//looking right flipped
                         direction = 'straight';
-                    } else if(direction == 'straight' && detection.detection.score > 0.85){
+                    } else if(direction == 'straight' && detection.detection.score > 0.85 && lookingStraight){
                         if(this._parentWillTakeControl) {
                             this.sendLivenessToParent();
                             return;
